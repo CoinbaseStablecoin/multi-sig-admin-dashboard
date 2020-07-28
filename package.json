@@ -2,16 +2,14 @@
   "name": "multi-sig-admin-gui",
   "version": "1.0.0",
   "private": true,
-  "dependencies": {
-    "@blueprintjs/core": "^3.30.0",
-    "@blueprintjs/icons": "^3.19.0",
-    "normalize.css": "^8.0.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
-    "reflexbox": "^4.0.6",
-    "typescript": "~3.9.7"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CoinbaseStablecoin/multi-sig-admin-dashboard.git"
   },
+  "contributors": [
+    "petejkim <pete.kim@coinbase.com>"
+  ],
   "scripts": {
     "setup": "git config core.hooksPath .githooks",
     "start": "react-scripts start",
@@ -23,20 +21,15 @@
     "lint": "eslint --ext '.js,.ts' './**/*.{j,t}s'",
     "precommit": "yarn fmt && yarn typecheck && yarn lint"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "@blueprintjs/core": "^3.30.0",
+    "@blueprintjs/icons": "^3.19.0",
+    "normalize.css": "^8.0.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1",
+    "reflexbox": "^4.0.6",
+    "typescript": "~3.9.7"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.1",
@@ -63,5 +56,17 @@
   "engines": {
     "node": ">= 12.0.0",
     "yarn": ">= 1.22.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
