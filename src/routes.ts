@@ -1,6 +1,7 @@
 export const routes = {
   home: "#/",
   contracts: "#/contracts",
+  addContract: "#/contracts/add",
   configurations: "#/configurations",
   proposals: "#/proposals",
   transactions: "#/transactions",

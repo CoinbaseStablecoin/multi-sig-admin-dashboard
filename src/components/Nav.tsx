@@ -5,9 +5,13 @@ import { CONTRACT_ADDRESS, NETWORK } from "../config";
 import { routes } from "../routes";
 import { etherscanAddress, shortenEthereumAddress } from "../util/address";
 
+const style: React.CSSProperties = {
+  height: "auto",
+};
+
 export function Nav(): JSX.Element {
   return (
-    <Navbar className="App-Navbar">
+    <Navbar style={style}>
       <Flex flexDirection="row" justifyContent="space-between" flexWrap="wrap">
         <Box>
           <Navbar.Group align={Alignment.LEFT}>
