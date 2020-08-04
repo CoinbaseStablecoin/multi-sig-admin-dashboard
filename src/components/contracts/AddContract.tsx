@@ -8,8 +8,10 @@ import {
 } from "@blueprintjs/core";
 import React, { useCallback, useState } from "react";
 import { routes } from "../../routes";
-import { isValidAbiJson } from "../../util/abi";
-import { isAddressValid } from "../../util/address";
+import { toaster } from "../../toaster";
+import { isValidAbiJson, parseAbiJson } from "../../util/abi";
+import { isAddressValid, toChecksumAddress } from "../../util/address";
+import { useStores } from "../hooks/useStores";
 
 const addButtonStyle: React.CSSProperties = {
   marginRight: 10,
@@ -22,6 +24,8 @@ function handleInputChange(setter: (value: string) => void) {
 }
 
 export function AddContract(): JSX.Element {
+  const { contractStore } = useStores();
+
   const [address, setAddress] = useState("");
   const [name, setName] = useState("");
   const [abi, setAbi] = useState("");
@@ -29,6 +33,19 @@ export function AddContract(): JSX.Element {
   const handleAddressChange = useCallback(handleInputChange(setAddress), []);
   const handleNameChange = useCallback(handleInputChange(setName), []);
   const handleAbiChange = useCallback(handleInputChange(setAbi), []);
+  const handleSubmit = useCallback(
+    (evt: React.FormEvent) => {
+      evt.preventDefault();
+      contractStore.contracts.push({
+        address: toChecksumAddress(address),
+        name,
+        abi: parseAbiJson(abi),
+      });
+      toaster.show({ message: `Contract "${name}" saved`, intent: "success" });
+      document.location.assign(routes.contracts);
+    },
+    [address, name, abi, contractStore.contracts]
+  );
 
   const validAddress = address.length === 0 || isAddressValid(address);
   const addressIntent = validAddress ? "none" : "danger";
@@ -37,7 +54,7 @@ export function AddContract(): JSX.Element {
   const abiIntent = validAbiJson ? "none" : "danger";
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <H2>Add Contract</H2>
 
       <FormGroup
@@ -53,6 +70,7 @@ export function AddContract(): JSX.Element {
       >
         <InputGroup
           id="contract-address"
+          data-testid="contract-address"
           placeholder="0x1234abcd1234abcd1234abcd1234abcd1234abcd"
           required
           value={address}
@@ -69,6 +87,7 @@ export function AddContract(): JSX.Element {
       >
         <InputGroup
           id="contract-name"
+          data-testid="contract-name"
           placeholder="Awesome Contract"
           required
           value={name}
@@ -89,6 +108,7 @@ export function AddContract(): JSX.Element {
       >
         <TextArea
           id="contract-abi"
+          data-testid="contract-abi"
           placeholder="[{}]"
           rows={10}
           fill
@@ -100,11 +120,13 @@ export function AddContract(): JSX.Element {
       </FormGroup>
 
       <Button
+        data-testid="save"
         icon="tick"
         text="Save"
         intent="primary"
         style={addButtonStyle}
         type="submit"
+        disabled={!validAddress || !validAbiJson}
       />
       <AnchorButton text="Cancel" href={routes.contracts} />
     </form>
