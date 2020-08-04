@@ -24,13 +24,16 @@
   "dependencies": {
     "@blueprintjs/core": "^3.30.0",
     "@blueprintjs/icons": "^3.19.0",
+    "mobx": "^5.15.4",
+    "mobx-react-lite": "^2.0.7",
     "normalize.css": "^8.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "reflexbox": "^4.0.6",
-    "typescript": "~3.9.7"
+    "typescript": "~3.9.7",
+    "web3": "^1.2.11"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.1",
