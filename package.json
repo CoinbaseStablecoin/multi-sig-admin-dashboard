@@ -14,7 +14,7 @@
     "setup": "git config core.hooksPath .githooks",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --env=jsdom-fourteen",
     "eject": "react-scripts eject",
     "typecheck": "tsc -p . --noEmit",
     "fmt": "prettier --write './**/*.{js,jsx,ts,tsx,json,md,css}'",
