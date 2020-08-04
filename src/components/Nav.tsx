@@ -3,7 +3,7 @@ import React from "react";
 import { Box, Flex } from "reflexbox";
 import { CONTRACT_ADDRESS, NETWORK } from "../config";
 import { routes } from "../routes";
-import { etherscanAddress, shortenEthereumAddress } from "../util/address";
+import { etherscanAddress, shortenAddress } from "../util/address";
 
 const style: React.CSSProperties = {
   height: "auto",
@@ -54,10 +54,10 @@ export function Nav(): JSX.Element {
             <AnchorButton
               minimal
               rightIcon="share"
-              text={`Contract: ${shortenEthereumAddress(CONTRACT_ADDRESS)} (${
+              text={`Contract: ${shortenAddress(CONTRACT_ADDRESS)} (${
                 NETWORK.name
               })`}
-              href={etherscanAddress(CONTRACT_ADDRESS, NETWORK)}
+              href={etherscanAddress(CONTRACT_ADDRESS, NETWORK.name)}
               target="_blank"
               rel="noopener noreferrer"
             />
