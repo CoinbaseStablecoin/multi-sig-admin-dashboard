@@ -49,6 +49,15 @@ export function isValidAbiJson(json: string): boolean {
 }
 
 /**
+ * Get functions from an array of AbiItem
+ * @param abi An array of AbiItem
+ * @returns An array of AbiItem of the type "function"
+ */
+export function getFunctions(abi: AbiItem[]): AbiItem[] {
+  return abi.filter((item) => item.type === "function");
+}
+
+/**
  * Check whether a given object is a valid AbiItem
  * @param abi Object to validate
  * @returns True if valid

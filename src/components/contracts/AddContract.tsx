@@ -10,7 +10,7 @@ import React, { useCallback, useState } from "react";
 import { routes } from "../../routes";
 import { toaster } from "../../toaster";
 import { isValidAbiJson, parseAbiJson } from "../../util/abi";
-import { isAddressValid, toChecksumAddress } from "../../util/address";
+import { isAddressValid } from "../../util/address";
 import { useStores } from "../hooks/useStores";
 
 const addButtonStyle: React.CSSProperties = {
@@ -36,15 +36,16 @@ export function AddContract(): JSX.Element {
   const handleSubmit = useCallback(
     (evt: React.FormEvent) => {
       evt.preventDefault();
-      contractStore.contracts.push({
-        address: toChecksumAddress(address),
+      contractStore.addContract({
+        address,
         name,
         abi: parseAbiJson(abi),
       });
+      contractStore.persist();
       toaster.show({ message: `Contract "${name}" saved`, intent: "success" });
       document.location.assign(routes.contracts);
     },
-    [address, name, abi, contractStore.contracts]
+    [address, name, abi, contractStore]
   );
 
   const validAddress = address.length === 0 || isAddressValid(address);

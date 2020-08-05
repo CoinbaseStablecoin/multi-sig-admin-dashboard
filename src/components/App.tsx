@@ -1,3 +1,4 @@
+import { configure } from "mobx";
 import React from "react";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import { Box, Flex } from "reflexbox";
@@ -11,6 +12,10 @@ import { Nav } from "./Nav";
 import { Proposals } from "./proposals/Proposals";
 import { defaultStores } from "./stores";
 import { Transactions } from "./transactions/Transactions";
+
+configure({ enforceActions: "always" });
+
+defaultStores.contractStore.restore();
 
 const style: React.CSSProperties = {
   position: "absolute",

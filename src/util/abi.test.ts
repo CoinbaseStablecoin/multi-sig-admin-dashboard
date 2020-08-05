@@ -1,3 +1,4 @@
+import { BASIC_TOKEN_ABI } from "../test/fixtures";
 import * as abi from "./abi";
 
 test("isValidAbi", () => {
@@ -75,4 +76,51 @@ test("isValidAbiJson", () => {
 
   expect(abi.isValidAbiJson("")).toBe(false);
   expect(abi.isValidAbiJson(`[{"type":"function","inputs":[]}]`)).toBe(false);
+});
+
+test("getFunctions", () => {
+  expect(abi.getFunctions(BASIC_TOKEN_ABI)).toEqual([
+    {
+      constant: true,
+      inputs: [
+        {
+          name: "_owner",
+          type: "address",
+        },
+      ],
+      name: "balanceOf",
+      outputs: [
+        {
+          name: "balance",
+          type: "uint256",
+        },
+      ],
+      payable: false,
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      constant: false,
+      inputs: [
+        {
+          name: "_to",
+          type: "address",
+        },
+        {
+          name: "_value",
+          type: "uint256",
+        },
+      ],
+      name: "transfer",
+      outputs: [
+        {
+          name: "",
+          type: "bool",
+        },
+      ],
+      payable: false,
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+  ]);
 });

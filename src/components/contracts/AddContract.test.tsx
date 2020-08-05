@@ -4,12 +4,14 @@ import { routes } from "../../routes";
 import { toaster } from "../../toaster";
 import { StoresContext } from "../contexts/StoresContext";
 import { initializeStores, Stores } from "../stores";
+import { ContractStore } from "../stores/ContractStore";
 import { AddContract } from "./AddContract";
 
 let stores: Stores;
 
 beforeEach(() => {
   toaster.clear();
+  localStorage.clear();
   document.location.assign("/#/contracts/add");
   stores = initializeStores();
 });
@@ -109,21 +111,38 @@ test("Save", () => {
     target: { value: `[{"type":"function","name":"foo","inputs":[]}]` },
   });
 
-  expect(stores.contractStore.contracts).toHaveLength(0);
+  expect(stores.contractStore.contracts.size).toEqual(0);
+  expect(localStorage.getItem(ContractStore.storageKey)).toBe(null);
 
   fireEvent.click(saveButton);
 
+  // check that the toast message is displayed
   expect(queryByText(document.body, `Contract "PeteCoin" saved`)).not.toBe(
     null
   );
 
-  expect(stores.contractStore.contracts).toHaveLength(1);
-  const [contract] = stores.contractStore.contracts;
+  // check that the contract is added to the store
+  expect(stores.contractStore.contracts.size).toEqual(1);
+  let [contract] = Array.from(stores.contractStore.contracts.values());
   expect(contract.address).toEqual(
     "0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa"
   );
   expect(contract.name).toEqual("PeteCoin");
   expect(contract.abi).toEqual([{ type: "function", name: "foo", inputs: [] }]);
 
+  expect(localStorage.getItem(ContractStore.storageKey)).not.toBe(null);
+
+  // check that the contract is persisted
+  const restoredStore = new ContractStore();
+  restoredStore.restore();
+  expect(restoredStore.contracts.size).toEqual(1);
+  [contract] = Array.from(restoredStore.contracts.values());
+  expect(contract.address).toEqual(
+    "0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa"
+  );
+  expect(contract.name).toEqual("PeteCoin");
+  expect(contract.abi).toEqual([{ type: "function", name: "foo", inputs: [] }]);
+
+  // check that it navigates to the contract list page
   expect(document.location.hash).toEqual(routes.contracts);
 });
