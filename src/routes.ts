@@ -1,12 +1,13 @@
 export const routes = {
-  home: "#/",
-  contracts: "#/contracts",
-  addContract: "#/contracts/add",
-  configurations: "#/configurations",
-  proposals: "#/proposals",
-  transactions: "#/transactions",
+  home: "/#/",
+  contracts: "/#/contracts",
+  addContract: "/#/contracts/add",
+  editContract: (address: string) => `/#/contracts/${address.toLowerCase()}`,
+  configurations: "/#/configurations",
+  proposals: "/#/proposals",
+  transactions: "/#/transactions",
 };
 
 export function stripHash(path: string): string {
-  return path.replace(/^#/, "");
+  return path.replace(/^\/#/, "");
 }

@@ -1,9 +1,12 @@
 export abstract class Store<T> {
-  static storageKey = "Store";
+  public static storageKey = "Store";
 
   protected abstract prepareData(): T;
   protected abstract restoreData(data: T): void;
 
+  /**
+   * Restore store from the data persisted in localStorage
+   */
   public restore(): void {
     const json = localStorage.getItem(
       (this.constructor as typeof Store).storageKey
@@ -21,6 +24,9 @@ export abstract class Store<T> {
     this.restoreData(data);
   }
 
+  /**
+   * Persist data in localStorage
+   */
   public persist(): void {
     localStorage.setItem(
       (this.constructor as typeof Store).storageKey,

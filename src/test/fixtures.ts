@@ -1,4 +1,5 @@
 import { AbiItem } from "web3-utils";
+import { ContractData } from "../components/stores/ContractStore";
 
 export const BASIC_TOKEN_ABI: AbiItem[] = [
   {
@@ -71,3 +72,9 @@ export const BASIC_TOKEN_ABI: AbiItem[] = [
     type: "event",
   },
 ];
+
+export const DUMMY_CONTRACT: ContractData = {
+  name: "PeteCoin",
+  address: "0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa",
+  abi: JSON.stringify([{ type: "function", name: "foo", inputs: [] }]),
+};

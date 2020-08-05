@@ -15,7 +15,7 @@ const tableStyle: React.CSSProperties = {
 export function Contracts(): JSX.Element {
   const { contractStore } = useStores();
 
-  const contracts = Array.from(contractStore.contracts.values());
+  const contracts = contractStore.allContracts();
 
   return (
     <div>
@@ -37,6 +37,7 @@ export function Contracts(): JSX.Element {
             <td>Name</td>
             <td>Address</td>
             <td># Functions</td>
+            <td></td>
           </tr>
         </thead>
         <tbody>
@@ -45,8 +46,8 @@ export function Contracts(): JSX.Element {
               <td colSpan={4}>(empty)</td>
             </tr>
           ) : (
-            contracts.map((contract, i) => (
-              <tr key={i}>
+            contracts.map((contract) => (
+              <tr key={contract.address}>
                 <td>{contract.name}</td>
                 <td>
                   <a
@@ -58,6 +59,12 @@ export function Contracts(): JSX.Element {
                   </a>
                 </td>
                 <td>{getFunctions(contract.abi).length}</td>
+                <td>
+                  <AnchorButton
+                    text="Edit"
+                    href={routes.editContract(contract.address)}
+                  />
+                </td>
               </tr>
             ))
           )}

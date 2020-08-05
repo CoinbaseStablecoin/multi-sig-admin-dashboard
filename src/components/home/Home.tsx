@@ -1,5 +1,7 @@
 import React from "react";
+import { routes } from "../../routes";
 
 export function Home(): JSX.Element {
-  return <div>home</div>;
+  document.location.replace(routes.contracts);
+  return <></>;
 }
