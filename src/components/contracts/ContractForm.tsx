@@ -3,6 +3,7 @@ import {
   Button,
   FormGroup,
   InputGroup,
+  Intent,
   TextArea,
 } from "@blueprintjs/core";
 import React, { useCallback, useState } from "react";
@@ -53,10 +54,10 @@ export function ContractForm(props: ContractFormProps): JSX.Element {
   );
 
   const validAddress = address.length === 0 || isAddressValid(address);
-  const addressIntent = validAddress ? "none" : "danger";
+  const addressIntent = validAddress ? Intent.NONE : Intent.DANGER;
 
   const validAbiJson = abi.length === 0 || isValidAbiJson(abi);
-  const abiIntent = validAbiJson ? "none" : "danger";
+  const abiIntent = validAbiJson ? Intent.NONE : Intent.DANGER;
 
   return (
     <form onSubmit={handleSubmit} data-testid="contract-form">
@@ -127,7 +128,7 @@ export function ContractForm(props: ContractFormProps): JSX.Element {
         data-testid="save"
         icon="tick"
         text="Save"
-        intent="primary"
+        intent={Intent.PRIMARY}
         style={addButtonStyle}
         type="submit"
         disabled={!validAddress || !validAbiJson}

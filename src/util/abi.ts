@@ -65,9 +65,10 @@ export function getFunctions(abi: AbiItem[]): AbiItem[] {
 function isValidAbiItem(item: any): item is AbiItem {
   if (
     !item ||
-    typeof item.name !== "string" ||
     typeof item.type !== "string" ||
-    (item.payable != null && typeof item.payable !== "boolean")
+    (item.type === "function" && typeof item.name !== "string") ||
+    (item.payable != null && typeof item.payable !== "boolean") ||
+    (item.stateMutability != null && typeof item.stateMutability !== "string")
   ) {
     return false;
   }

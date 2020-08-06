@@ -76,5 +76,41 @@ export const BASIC_TOKEN_ABI: AbiItem[] = [
 export const DUMMY_CONTRACT: ContractData = {
   name: "PeteCoin",
   address: "0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa",
-  abi: JSON.stringify([{ type: "function", name: "foo", inputs: [] }]),
+  abi: JSON.stringify([
+    {
+      type: "function",
+      name: "send",
+      inputs: [
+        { name: "to", type: "address" },
+        { name: "amount", type: "uint256" },
+      ],
+    },
+    {
+      type: "function",
+      name: "balance",
+      inputs: [{ name: "account", type: "address" }],
+      outputs: [{ name: "", type: "uint256" }],
+    },
+  ]),
+};
+
+export const DUMMY_CONTRACT_2: ContractData = {
+  name: "DuckCoin",
+  address: "0xDDdDddDdDdddDDddDDddDDDDdDdDDdDDdDDDDDDd",
+  abi: JSON.stringify([
+    {
+      type: "function",
+      name: "transfer",
+      inputs: [
+        { name: "recipient", type: "address" },
+        { name: "value", type: "uint256" },
+      ],
+    },
+    {
+      type: "function",
+      name: "getBalance",
+      inputs: [{ name: "account", type: "address" }],
+      outputs: [{ name: "", type: "uint256" }],
+    },
+  ]),
 };

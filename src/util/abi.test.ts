@@ -40,6 +40,11 @@ test("isValidAbi", () => {
           },
         ],
       },
+      {
+        type: "constructor",
+        inputs: [{ name: "implementation", type: "address" }],
+        stateMutability: "nonpayable",
+      },
     ])
   ).toBe(true);
 

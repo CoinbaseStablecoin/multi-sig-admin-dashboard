@@ -70,4 +70,12 @@ export class ContractStore extends Store<ContractData[]> {
   public getContract(address: string): Contract | null {
     return this.contracts.get(address.toLowerCase()) || null;
   }
+
+  /**
+   * Remove a contract from the store
+   * @param address The address of the contract to remove
+   */
+  public removeContract(address: string): void {
+    this.contracts.delete(address.toLowerCase());
+  }
 }
