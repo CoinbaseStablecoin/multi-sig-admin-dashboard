@@ -9,11 +9,11 @@ import {
 import React, { useCallback, useState } from "react";
 import { Box, Flex } from "reflexbox";
 import { NETWORK } from "../../config";
+import { useStores } from "../../hooks/useStores";
 import { routes } from "../../routes";
+import { Contract } from "../../stores/ContractStore";
 import { getFunctions } from "../../util/abi";
 import { etherscanAddress } from "../../util/address";
-import { useStores } from "../hooks/useStores";
-import { Contract } from "../stores/ContractStore";
 
 const styles: { [name: string]: React.CSSProperties } = {
   table: {

@@ -1,10 +1,10 @@
 import { render } from "@testing-library/react";
 import React from "react";
 import { HashRouter as Router, Route } from "react-router-dom";
+import { StoresContext } from "../../contexts/StoresContext";
 import { routes, stripHash } from "../../routes";
+import { initializeStores, Stores } from "../../stores";
 import { DUMMY_CONTRACT } from "../../test/fixtures";
-import { StoresContext } from "../contexts/StoresContext";
-import { initializeStores, Stores } from "../stores";
 import { EditContract } from "./EditContract";
 
 let stores: Stores;

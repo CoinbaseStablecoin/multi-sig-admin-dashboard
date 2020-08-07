@@ -1,5 +1,5 @@
 import { AbiItem } from "web3-utils";
-import { ContractData } from "../components/stores/ContractStore";
+import { ContractData } from "../stores/ContractStore";
 
 export const BASIC_TOKEN_ABI: AbiItem[] = [
   {

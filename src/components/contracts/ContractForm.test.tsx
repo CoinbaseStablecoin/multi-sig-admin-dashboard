@@ -1,14 +1,14 @@
 import { fireEvent, queryByText, render } from "@testing-library/react";
 import React from "react";
+import { StoresContext } from "../../contexts/StoresContext";
 import { routes } from "../../routes";
-import { DUMMY_CONTRACT } from "../../test/fixtures";
-import { toaster } from "../../toaster";
-import { StoresContext } from "../contexts/StoresContext";
-import { initializeStores, Stores } from "../stores";
+import { initializeStores, Stores } from "../../stores";
 import {
   ContractData as ContractFormProps,
   ContractStore,
-} from "../stores/ContractStore";
+} from "../../stores/ContractStore";
+import { DUMMY_CONTRACT } from "../../test/fixtures";
+import { toaster } from "../../toaster";
 import { ContractForm } from "./ContractForm";
 
 let stores: Stores;

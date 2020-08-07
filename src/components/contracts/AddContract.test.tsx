@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import React from "react";
-import { StoresContext } from "../contexts/StoresContext";
-import { initializeStores } from "../stores";
+import { StoresContext } from "../../contexts/StoresContext";
+import { initializeStores } from "../../stores";
 import { AddContract } from "./AddContract";
 
 test("Render contract form", () => {

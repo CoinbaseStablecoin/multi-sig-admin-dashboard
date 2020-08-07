@@ -1,8 +1,8 @@
 import { H2 } from "@blueprintjs/core";
 import React from "react";
 import { useParams } from "react-router-dom";
+import { useStores } from "../../hooks/useStores";
 import { routes } from "../../routes";
-import { useStores } from "../hooks/useStores";
 import { NotFound } from "../NotFound";
 import { ContractForm } from "./ContractForm";
 

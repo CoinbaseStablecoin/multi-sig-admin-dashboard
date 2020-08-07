@@ -7,11 +7,11 @@ import {
   TextArea,
 } from "@blueprintjs/core";
 import React, { useCallback, useState } from "react";
+import { useStores } from "../../hooks/useStores";
 import { routes } from "../../routes";
 import { toaster } from "../../toaster";
 import { isValidAbiJson } from "../../util/abi";
 import { isAddressValid } from "../../util/address";
-import { useStores } from "../hooks/useStores";
 
 const addButtonStyle: React.CSSProperties = {
   marginRight: 10,

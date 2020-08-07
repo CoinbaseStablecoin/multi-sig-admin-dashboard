@@ -5,11 +5,11 @@ import {
   render,
 } from "@testing-library/react";
 import React from "react";
+import { StoresContext } from "../../contexts/StoresContext";
 import { routes } from "../../routes";
+import { initializeStores, Stores } from "../../stores";
 import { DUMMY_CONTRACT, DUMMY_CONTRACT_2 } from "../../test/fixtures";
 import { toaster } from "../../toaster";
-import { StoresContext } from "../contexts/StoresContext";
-import { initializeStores, Stores } from "../stores";
 import { Contracts } from "./Contracts";
 
 let stores: Stores;

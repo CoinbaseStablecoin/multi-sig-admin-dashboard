@@ -1,7 +1,7 @@
 import { action, observable } from "mobx";
 import { AbiItem } from "web3-utils";
-import { parseAbiJson } from "../../util/abi";
-import { toChecksumAddress } from "../../util/address";
+import { parseAbiJson } from "../util/abi";
+import { toChecksumAddress } from "../util/address";
 import { Store } from "./Store";
 
 export interface Contract {

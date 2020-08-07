@@ -1,10 +1,10 @@
 import { configure } from "mobx";
 import React from "react";
 import { Box, Flex } from "reflexbox";
+import { StoresContext } from "../contexts/StoresContext";
+import { defaultStores } from "../stores";
 import { AppRouter } from "./AppRouter";
-import { StoresContext } from "./contexts/StoresContext";
 import { Nav } from "./Nav";
-import { defaultStores } from "./stores";
 
 configure({ enforceActions: "always" });
 
