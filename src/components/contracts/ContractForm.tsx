@@ -1,6 +1,7 @@
 import {
   AnchorButton,
   Button,
+  Classes,
   FormGroup,
   InputGroup,
   Intent,
@@ -11,17 +12,9 @@ import { useStores } from "../../hooks/useStores";
 import { routes } from "../../routes";
 import { toaster } from "../../toaster";
 import { isValidAbiJson } from "../../util/abi";
-import { isAddressValid } from "../../util/address";
-
-const addButtonStyle: React.CSSProperties = {
-  marginRight: 10,
-};
-
-function handleInputChange(setter: (value: string) => void) {
-  return (evt: React.ChangeEvent<HTMLElement>) => {
-    setter((evt.target as HTMLInputElement).value);
-  };
-}
+import { isValidAddress } from "../../util/address";
+import { handleStringChange } from "../common/handlers";
+import { commonStyles } from "../common/styles";
 
 export interface ContractFormProps {
   address: string;
@@ -36,9 +29,9 @@ export function ContractForm(props: ContractFormProps): JSX.Element {
   const [name, setName] = useState(props.name);
   const [abi, setAbi] = useState(props.abi);
 
-  const handleAddressChange = useCallback(handleInputChange(setAddress), []);
-  const handleNameChange = useCallback(handleInputChange(setName), []);
-  const handleAbiChange = useCallback(handleInputChange(setAbi), []);
+  const handleAddressChange = useCallback(handleStringChange(setAddress), []);
+  const handleNameChange = useCallback(handleStringChange(setName), []);
+  const handleAbiChange = useCallback(handleStringChange(setAbi), []);
   const handleSubmit = useCallback(
     (evt: React.FormEvent) => {
       evt.preventDefault();
@@ -53,14 +46,16 @@ export function ContractForm(props: ContractFormProps): JSX.Element {
     [address, name, abi, contractStore]
   );
 
-  const validAddress = address.length === 0 || isAddressValid(address);
+  const validAddress = address.length === 0 || isValidAddress(address);
   const addressIntent = validAddress ? Intent.NONE : Intent.DANGER;
 
   const validAbiJson = abi.length === 0 || isValidAbiJson(abi);
   const abiIntent = validAbiJson ? Intent.NONE : Intent.DANGER;
 
+  const saveDisabled = !address || !abi || !validAddress || !validAbiJson;
+
   return (
-    <form onSubmit={handleSubmit} data-testid="contract-form">
+    <form data-testid="contract-form" onSubmit={handleSubmit}>
       <FormGroup
         label="Contract Address"
         labelInfo={props.address ? "" : "(required)"}
@@ -75,6 +70,7 @@ export function ContractForm(props: ContractFormProps): JSX.Element {
         <InputGroup
           id="contract-address"
           data-testid="contract-address"
+          className={Classes.MONOSPACE_TEXT}
           placeholder="0x1234abcd1234abcd1234abcd1234abcd1234abcd"
           required
           value={address}
@@ -113,6 +109,7 @@ export function ContractForm(props: ContractFormProps): JSX.Element {
       >
         <TextArea
           id="contract-abi"
+          className={Classes.MONOSPACE_TEXT}
           data-testid="contract-abi"
           placeholder="[{}]"
           rows={10}
@@ -129,9 +126,9 @@ export function ContractForm(props: ContractFormProps): JSX.Element {
         icon="tick"
         text="Save"
         intent={Intent.PRIMARY}
-        style={addButtonStyle}
+        style={commonStyles.rightGap}
         type="submit"
-        disabled={!validAddress || !validAbiJson}
+        disabled={saveDisabled}
       />
       <AnchorButton text="Cancel" href={routes.contracts} />
     </form>

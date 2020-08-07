@@ -1,3 +1,4 @@
+import { Classes } from "@blueprintjs/core";
 import { fireEvent, queryByText, render } from "@testing-library/react";
 import React from "react";
 import { StoresContext } from "../../contexts/StoresContext";
@@ -33,69 +34,60 @@ function renderComponent(
 test("Address validation", () => {
   const comp = renderComponent();
   const addressField = comp.getByTestId("contract-address") as HTMLInputElement;
-  const saveButton = comp.getByTestId("save") as HTMLButtonElement;
+  const addressFieldWrapper = addressField.parentElement;
+
+  expect(addressFieldWrapper?.classList).toContain(Classes.INPUT_GROUP);
 
   // blank
   fireEvent.change(addressField, { target: { value: "" } });
-  expect(comp.queryByText("Invalid Ethereum address")).toBe(null);
-  expect(saveButton).not.toBeDisabled();
+  expect(addressFieldWrapper?.classList).not.toContain(Classes.INTENT_DANGER);
 
   // invalid address
   fireEvent.change(addressField, { target: { value: "0x" } });
-  expect(comp.queryByText("Invalid Ethereum address")).not.toBe(null);
-  expect(saveButton).toBeDisabled();
+  expect(addressFieldWrapper?.classList).toContain(Classes.INTENT_DANGER);
 
   // valid non-checksum address
   fireEvent.change(addressField, {
     target: { value: "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" },
   });
-  expect(comp.queryByText("Invalid Ethereum address")).toBe(null);
-  expect(saveButton).not.toBeDisabled();
+  expect(addressFieldWrapper?.classList).not.toContain(Classes.INTENT_DANGER);
 
   // valid checksum address
   fireEvent.change(addressField, {
     target: { value: "0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa" },
   });
-  expect(comp.queryByText("Invalid Ethereum address")).toBe(null);
-  expect(saveButton).not.toBeDisabled();
+  expect(addressFieldWrapper?.classList).not.toContain(Classes.INTENT_DANGER);
 
   // invalid checksum address
   fireEvent.change(addressField, {
     target: { value: "0xAAAAAAAAAAAAAAAAAAaaaaaaaaaaaaaaaaaaaaaa" },
   });
-  expect(comp.queryByText("Invalid Ethereum address")).not.toBe(null);
-  expect(saveButton).toBeDisabled();
+  expect(addressFieldWrapper?.classList).toContain(Classes.INTENT_DANGER);
 });
 
 test("ABI validation", () => {
   const comp = renderComponent();
   const abiField = comp.getByTestId("contract-abi") as HTMLTextAreaElement;
-  const saveButton = comp.getByTestId("save") as HTMLButtonElement;
 
   // blank
   fireEvent.change(abiField, { target: { value: "" } });
-  expect(comp.queryByText("Invalid ABI JSON")).toBe(null);
-  expect(saveButton).not.toBeDisabled();
+  expect(abiField.classList).not.toContain(Classes.INTENT_DANGER);
 
   // invalid abi
   fireEvent.change(abiField, { target: { value: "[" } });
-  expect(comp.queryByText("Invalid ABI JSON")).not.toBe(null);
-  expect(saveButton).toBeDisabled();
+  expect(abiField.classList).toContain(Classes.INTENT_DANGER);
 
   fireEvent.change(abiField, { target: { value: `[{"type":"function"}]` } });
-  expect(comp.queryByText("Invalid ABI JSON")).not.toBe(null);
-  expect(saveButton).toBeDisabled();
+  expect(abiField.classList).toContain(Classes.INTENT_DANGER);
 
   // valid abi
   fireEvent.change(abiField, { target: { value: "[]" } });
-  expect(comp.queryByText("Invalid ABI JSON")).toBe(null);
-  expect(saveButton).not.toBeDisabled();
+  expect(abiField.classList).not.toContain(Classes.INTENT_DANGER);
 
   fireEvent.change(abiField, {
     target: { value: `[{"type":"function","name":"foo","inputs":[]}]` },
   });
-  expect(comp.queryByText("Invalid ABI JSON")).toBe(null);
-  expect(saveButton).not.toBeDisabled();
+  expect(abiField.classList).not.toContain(Classes.INTENT_DANGER);
 });
 
 test("Saving a new contract", () => {
@@ -105,11 +97,15 @@ test("Saving a new contract", () => {
   const abiField = comp.getByTestId("contract-abi") as HTMLTextAreaElement;
   const saveButton = comp.getByTestId("save") as HTMLButtonElement;
 
+  expect(saveButton).toBeDisabled();
   fireEvent.change(addressField, {
     target: { value: DUMMY_CONTRACT.address.toLowerCase() },
   });
+  expect(saveButton).toBeDisabled();
   fireEvent.change(nameField, { target: { value: DUMMY_CONTRACT.name } });
+  expect(saveButton).toBeDisabled();
   fireEvent.change(abiField, { target: { value: DUMMY_CONTRACT.abi } });
+  expect(saveButton).not.toBeDisabled();
 
   fireEvent.click(saveButton);
 

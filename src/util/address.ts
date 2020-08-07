@@ -24,7 +24,7 @@ export function etherscanAddress(address: string, network: string): string {
  * @param address Ethereum address
  * @returns True if valid
  */
-export function isAddressValid(address: string): boolean {
+export function isValidAddress(address: string): boolean {
   return Web3.utils.isAddress(address);
 }
 

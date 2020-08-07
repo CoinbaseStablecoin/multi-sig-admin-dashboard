@@ -30,27 +30,27 @@ test("etherscanAddress", () => {
   );
 });
 
-test("isAddressValid", () => {
+test("isValidAddress", () => {
   expect(
-    address.isAddressValid("0x0000000000000000000000000000000000000000")
+    address.isValidAddress("0x0000000000000000000000000000000000000000")
   ).toBe(true);
   expect(
-    address.isAddressValid("0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    address.isValidAddress("0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
   ).toBe(true);
   expect(
-    address.isAddressValid("0xAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    address.isValidAddress("0xAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
   ).toBe(true);
   expect(
-    address.isAddressValid("0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa")
+    address.isValidAddress("0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa")
   ).toBe(true);
   expect(
-    address.isAddressValid("0xAAAAAAAAAAAAAAAAAAaaaaaaaaaaaaaaaaaaaaaa")
+    address.isValidAddress("0xAAAAAAAAAAAAAAAAAAaaaaaaaaaaaaaaaaaaaaaa")
   ).toBe(false);
 
-  expect(address.isAddressValid("")).toBe(false);
-  expect(address.isAddressValid("0x")).toBe(false);
+  expect(address.isValidAddress("")).toBe(false);
+  expect(address.isValidAddress("0x")).toBe(false);
   expect(
-    address.isAddressValid("0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabb")
+    address.isValidAddress("0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabb")
   ).toBe(false);
 });
 
