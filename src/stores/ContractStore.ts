@@ -32,6 +32,7 @@ export class ContractStore extends Store<ContractData[]> {
     }));
   }
 
+  @action
   protected restoreData(data: ContractData[]): void {
     for (const contract of data) {
       this.addContract(contract);
@@ -75,6 +76,7 @@ export class ContractStore extends Store<ContractData[]> {
    * Remove a contract from the store
    * @param address The address of the contract to remove
    */
+  @action
   public removeContract(address: string): void {
     this.contracts.delete(address.toLowerCase());
   }

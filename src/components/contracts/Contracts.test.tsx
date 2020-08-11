@@ -1,3 +1,4 @@
+import { Classes } from "@blueprintjs/core";
 import {
   fireEvent,
   getByTestId,
@@ -70,7 +71,7 @@ test("Removing a contract", () => {
 
   fireEvent.click(getByTestId(rows[0], "contract-row-remove"));
 
-  const alertDialog = comp.baseElement.querySelector(".bp3-alert");
+  const alertDialog = comp.baseElement.getElementsByClassName(Classes.ALERT)[0];
   expect(alertDialog).not.toBe(null);
 
   fireEvent.click(getByText(alertDialog as HTMLElement, "Remove"));

@@ -1,4 +1,5 @@
 import { AbiInput, AbiItem } from "web3-utils";
+import { AbiFunction } from "./AbiFunction";
 
 /**
  * Check whether a given object is an array of valid AbiItem objects
@@ -49,12 +50,21 @@ export function isValidAbiJson(json: string): boolean {
 }
 
 /**
- * Get functions from an array of AbiItem
+ * Get a list of AbiFunction by parsing an array of AbiItem. The list will only
+ * include transactable functions (i.e. functions that modify state)
  * @param abi An array of AbiItem
  * @returns An array of AbiItem of the type "function"
  */
-export function getFunctions(abi: AbiItem[]): AbiItem[] {
-  return abi.filter((item) => item.type === "function");
+export function getTransactableFunctions(abi: AbiItem[]): AbiFunction[] {
+  return abi
+    .filter(
+      (item) =>
+        item.type === "function" &&
+        (item.payable ||
+          item.stateMutability === "nonpayable" ||
+          item.stateMutability === "payable")
+    )
+    .map((item) => new AbiFunction(item));
 }
 
 /**

@@ -1,5 +1,6 @@
 import { BASIC_TOKEN_ABI } from "../test/fixtures";
 import * as abi from "./abi";
+import { AbiFunction } from "./AbiFunction";
 
 test("isValidAbi", () => {
   expect(abi.isValidAbi([])).toBe(true);
@@ -83,49 +84,25 @@ test("isValidAbiJson", () => {
   expect(abi.isValidAbiJson(`[{"type":"function","inputs":[]}]`)).toBe(false);
 });
 
-test("getFunctions", () => {
-  expect(abi.getFunctions(BASIC_TOKEN_ABI)).toEqual([
+test("getTransactableFunctions", () => {
+  const functions = abi.getTransactableFunctions(BASIC_TOKEN_ABI);
+  expect(functions).toHaveLength(2);
+  expect(functions[0]).toBeInstanceOf(AbiFunction);
+  expect(functions[0]?.name).toEqual("transfer");
+  expect(functions[0]?.payable).toBe(false);
+  expect(functions[0]?.inputs).toEqual([
     {
-      constant: true,
-      inputs: [
-        {
-          name: "_owner",
-          type: "address",
-        },
-      ],
-      name: "balanceOf",
-      outputs: [
-        {
-          name: "balance",
-          type: "uint256",
-        },
-      ],
-      payable: false,
-      stateMutability: "view",
-      type: "function",
+      name: "_to",
+      type: "address",
     },
     {
-      constant: false,
-      inputs: [
-        {
-          name: "_to",
-          type: "address",
-        },
-        {
-          name: "_value",
-          type: "uint256",
-        },
-      ],
-      name: "transfer",
-      outputs: [
-        {
-          name: "",
-          type: "bool",
-        },
-      ],
-      payable: false,
-      stateMutability: "nonpayable",
-      type: "function",
+      name: "_value",
+      type: "uint256",
     },
   ]);
+
+  expect(functions[1]).toBeInstanceOf(AbiFunction);
+  expect(functions[1]?.name).toEqual("contribute");
+  expect(functions[1]?.payable).toBe(true);
+  expect(functions[1]?.inputs).toEqual([]);
 });

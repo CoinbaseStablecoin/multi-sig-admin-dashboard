@@ -2,6 +2,7 @@ import {
   Alert,
   AnchorButton,
   Button,
+  Classes,
   H2,
   HTMLTable,
   Intent,
@@ -12,7 +13,7 @@ import { NETWORK } from "../../config";
 import { useStores } from "../../hooks/useStores";
 import { routes } from "../../routes";
 import { Contract } from "../../stores/ContractStore";
-import { getFunctions } from "../../util/abi";
+import { getTransactableFunctions } from "../../util/abi";
 import { etherscanAddress } from "../../util/address";
 
 const styles: { [name: string]: React.CSSProperties } = {
@@ -118,11 +119,13 @@ export function Contracts(): JSX.Element {
   );
 }
 
-function ContractRow(props: {
+function ContractRow({
+  contract,
+  onRemoveClick,
+}: {
   contract: Contract;
   onRemoveClick: (contract: Contract) => void;
 }): JSX.Element {
-  const { contract, onRemoveClick } = props;
   const { address, name, abi } = contract;
 
   const handleRemoveClick = useCallback(() => {
@@ -134,6 +137,7 @@ function ContractRow(props: {
       <td>{name}</td>
       <td>
         <a
+          className={Classes.MONOSPACE_TEXT}
           href={etherscanAddress(address, NETWORK.name)}
           target="_blank"
           rel="noopener noreferrer"
@@ -141,7 +145,7 @@ function ContractRow(props: {
           {address}
         </a>
       </td>
-      <td>{getFunctions(abi).length}</td>
+      <td>{getTransactableFunctions(abi).length}</td>
       <td style={styles.actions}>
         <AnchorButton
           icon="edit"
