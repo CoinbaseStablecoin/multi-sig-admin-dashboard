@@ -11,3 +11,10 @@ export function handleStringChange<
   };
 }
 
+export function handleIntegerChange<
+  T extends { value: string } = HTMLInputElements
+>(setter: (value: number) => void) {
+  return (evt: React.ChangeEvent<T>) => {
+    setter(Math.floor(Number(evt.target.value)));
+  };
+}

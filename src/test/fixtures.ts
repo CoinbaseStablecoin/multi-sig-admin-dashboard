@@ -45,6 +45,15 @@ export const BASIC_TOKEN_ABI: AbiItem[] = [
     type: "function",
   },
   {
+    constant: false,
+    inputs: [],
+    name: "contribute",
+    outputs: [],
+    payable: true,
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
     payable: true,
     stateMutability: "payable",
     type: "fallback",
@@ -78,18 +87,22 @@ export const DUMMY_CONTRACT: ContractData = {
   address: "0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa",
   abi: JSON.stringify([
     {
+      // selector: d0679d34
       type: "function",
       name: "send",
       inputs: [
         { name: "to", type: "address" },
         { name: "amount", type: "uint256" },
       ],
+      stateMutability: "nonpayable",
     },
     {
+      // selector: e3d670d7
       type: "function",
       name: "balance",
       inputs: [{ name: "account", type: "address" }],
       outputs: [{ name: "", type: "uint256" }],
+      stateMutability: "view",
     },
   ]),
 };
@@ -99,18 +112,25 @@ export const DUMMY_CONTRACT_2: ContractData = {
   address: "0xDDdDddDdDdddDDddDDddDDDDdDdDDdDDdDDDDDDd",
   abi: JSON.stringify([
     {
+      // selector: a9059cbb
       type: "function",
       name: "transfer",
       inputs: [
         { name: "recipient", type: "address" },
         { name: "value", type: "uint256" },
       ],
+      stateMutability: "nonpayable",
     },
     {
+      // selector: f8b2cb4f
       type: "function",
       name: "getBalance",
       inputs: [{ name: "account", type: "address" }],
       outputs: [{ name: "", type: "uint256" }],
+      stateMutability: "view",
     },
   ]),
 };
+
+export const VALID_ADDRESS = "0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa";
+export const VALID_ADDRESS_2 = "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB";

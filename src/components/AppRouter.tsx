@@ -2,6 +2,7 @@ import React from "react";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import { routes, stripHash } from "../routes";
 import { Configurations } from "./configurations/Configurations";
+import { NewConfiguration } from "./configurations/NewConfiguration";
 import { AddContract } from "./contracts/AddContract";
 import { Contracts } from "./contracts/Contracts";
 import { EditContract } from "./contracts/EditContract";
@@ -29,6 +30,11 @@ export function AppRouter(): JSX.Element {
           exact
           path={stripHash(routes.configurations)}
           component={Configurations}
+        />
+        <Route
+          exact
+          path={stripHash(routes.newConfiguration)}
+          component={NewConfiguration}
         />
         <Route exact path={stripHash(routes.proposals)} component={Proposals} />
         <Route

@@ -4,6 +4,7 @@ export const routes = {
   addContract: "/#/contracts/add",
   editContract: (address: string) => `/#/contracts/${address.toLowerCase()}`,
   configurations: "/#/configurations",
+  newConfiguration: "/#/configurations/new",
   proposals: "/#/proposals",
   transactions: "/#/transactions",
 };
