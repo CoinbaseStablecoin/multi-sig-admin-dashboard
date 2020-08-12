@@ -48,7 +48,7 @@ export function Contracts(): JSX.Element {
   const handleRemoveConfirmClick = useCallback(() => {
     if (contractToRemove) {
       contractStore.removeContract(contractToRemove.address);
-      contractStore.persist();
+      contractStore.save();
       setContractToRemove(null);
     }
   }, [contractStore, contractToRemove]);

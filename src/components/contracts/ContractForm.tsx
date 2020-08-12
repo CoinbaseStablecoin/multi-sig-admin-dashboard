@@ -36,7 +36,7 @@ export function ContractForm(props: ContractFormProps): JSX.Element {
     (evt: React.FormEvent) => {
       evt.preventDefault();
       const contract = contractStore.addContract({ address, name, abi });
-      contractStore.persist();
+      contractStore.save();
       toaster.show({
         message: `Contract "${contract.name}" saved`,
         intent: "success",

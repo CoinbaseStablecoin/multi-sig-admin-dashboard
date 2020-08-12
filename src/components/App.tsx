@@ -9,7 +9,8 @@ import { Nav } from "./Nav";
 
 configure({ enforceActions: "always" });
 
-defaultStores.contractStore.restore();
+defaultStores.contractStore.load();
+defaultStores.transactionStore.load();
 
 const style = ReactCSS({
   position: "absolute",

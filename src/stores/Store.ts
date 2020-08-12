@@ -1,13 +1,22 @@
 export abstract class Store<T> {
-  public static storageKey = "Store";
-
-  protected abstract prepareData(): T;
-  protected abstract restoreData(data: T): void;
+  public static readonly storageKey: string;
 
   /**
-   * Restore store from the data persisted in localStorage
+   * Convert native store data to a JSON-stringifiable format
+   * @returns Marshaled data
    */
-  public restore(): void {
+  protected abstract marshal(): T;
+
+  /**
+   * Convert marshalled data back to native store data
+   * @param data Marshaled data
+   */
+  protected abstract unmarshal(data: T): void;
+
+  /**
+   * Load data from localStorage
+   */
+  public load(): void {
     const json = localStorage.getItem(
       (this.constructor as typeof Store).storageKey
     );
@@ -21,16 +30,16 @@ export abstract class Store<T> {
       return;
     }
 
-    this.restoreData(data);
+    this.unmarshal(data);
   }
 
   /**
-   * Persist data in localStorage
+   * Save data to localStorage
    */
-  public persist(): void {
+  public save(): void {
     localStorage.setItem(
       (this.constructor as typeof Store).storageKey,
-      JSON.stringify(this.prepareData())
+      JSON.stringify(this.marshal())
     );
   }
 }

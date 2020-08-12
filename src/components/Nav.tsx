@@ -1,16 +1,27 @@
-import { Alignment, AnchorButton, Navbar } from "@blueprintjs/core";
+import {
+  Alignment,
+  AnchorButton,
+  ButtonGroup,
+  Navbar,
+  Tag,
+} from "@blueprintjs/core";
 import React from "react";
 import { Box, Flex } from "reflexbox";
 import { CONTRACT_ADDRESS, NETWORK } from "../config";
+import { useStores } from "../hooks/useStores";
 import { routes } from "../routes";
 import { etherscanAddress, shortenAddress } from "../util/address";
-import { ReactCSS } from "./common/styles";
+import { commonStyles, ReactCSS } from "./common/styles";
 
 const style = ReactCSS({
   height: "auto",
 });
 
 export function Nav(): JSX.Element {
+  const { transactionStore } = useStores();
+
+  const transactionCount = transactionStore.count();
+
   return (
     <Navbar style={style}>
       <Flex flexDirection="row" justifyContent="space-between" flexWrap="wrap">
@@ -24,30 +35,34 @@ export function Nav(): JSX.Element {
                 href={routes.home}
               />
             </Navbar.Heading>
-            <AnchorButton
-              minimal
-              icon="code"
-              text="Contracts"
-              href={routes.contracts}
-            />
-            <AnchorButton
-              minimal
-              icon="settings"
-              text="Configurations"
-              href={routes.configurations}
-            />
-            <AnchorButton
-              minimal
-              icon="document"
-              text="Proposals"
-              href={routes.proposals}
-            />
-            <AnchorButton
-              minimal
-              icon="exchange"
-              text="Transactions"
-              href={routes.transactions}
-            />
+            <ButtonGroup>
+              <AnchorButton
+                icon="code"
+                text="Contracts"
+                href={routes.contracts}
+              />
+              <AnchorButton
+                icon="settings"
+                text="Configurations"
+                href={routes.configurations}
+              />
+              <AnchorButton
+                icon="document"
+                text="Proposals"
+                href={routes.proposals}
+              />
+              <AnchorButton
+                icon="exchange"
+                text="Transactions"
+                href={routes.transactions}
+              >
+                {transactionCount > 0 ? (
+                  <Tag style={commonStyles.leftGap} round>
+                    {transactionCount}
+                  </Tag>
+                ) : null}
+              </AnchorButton>
+            </ButtonGroup>
           </Navbar.Group>
         </Box>
         <Box>

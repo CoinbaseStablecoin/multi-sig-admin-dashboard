@@ -11,19 +11,25 @@ import {
 import React, { useCallback, useMemo, useState } from "react";
 import { useStores } from "../../hooks/useStores";
 import { routes } from "../../routes";
+import { toaster } from "../../toaster";
+import { ConfigureTx } from "../../transactions/ConfigureTx";
 import { getTransactableFunctions } from "../../util/abi";
 import { isValidAddress } from "../../util/address";
 import { handleIntegerChange, handleStringChange } from "../common/handlers";
 import { commonStyles } from "../common/styles";
 
 export function ConfigurationForm(): JSX.Element {
-  const { contractStore } = useStores();
+  const { contractStore, transactionStore } = useStores();
 
   const [targetContract, setTargetContract] = useState("");
   const [selector, setSelector] = useState("");
   const [minApprovals, setMinApprovals] = useState(1);
   const [maxOpenProposals, setMaxOpenProposals] = useState(10);
   const [approvers, setApprovers] = useState("");
+
+  const approverAddresses = useMemo(() => parseApprovers(approvers), [
+    approvers,
+  ]);
 
   const handleTargetContractChange = useCallback(
     handleStringChange((v: string) => {
@@ -46,6 +52,34 @@ export function ConfigurationForm(): JSX.Element {
     []
   );
 
+  const handleSubmit = useCallback(
+    (evt: React.FormEvent) => {
+      evt.preventDefault();
+      const tx = new ConfigureTx(
+        targetContract,
+        selector,
+        minApprovals,
+        maxOpenProposals,
+        approverAddresses || []
+      );
+      transactionStore.addTransaction(tx);
+      transactionStore.save();
+      toaster.show({
+        message: "Configure transaction created",
+        intent: "success",
+      });
+      document.location.assign(routes.transactions);
+    },
+    [
+      targetContract,
+      selector,
+      minApprovals,
+      maxOpenProposals,
+      approverAddresses,
+      transactionStore,
+    ]
+  );
+
   const contracts = contractStore.allContracts();
 
   const functions = useMemo(() => {
@@ -56,13 +90,13 @@ export function ConfigurationForm(): JSX.Element {
     return getTransactableFunctions(contract.abi);
   }, [contractStore, targetContract]);
 
-  const approverAddresses = parseApprovers(approvers);
   const validApprovers = approverAddresses !== null;
   const approversIntent = validApprovers ? Intent.NONE : Intent.DANGER;
 
   const maxApprovals = approverAddresses?.length || 1;
   const validMinApprovals =
     minApprovals > 0 &&
+    minApprovals <= 100 &&
     (approverAddresses === null || minApprovals <= maxApprovals);
   const minApprovalsIntent = validMinApprovals ? Intent.NONE : Intent.DANGER;
 
@@ -79,7 +113,7 @@ export function ConfigurationForm(): JSX.Element {
     approverAddresses.length === 0;
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <FormGroup label="Contract" labelFor="target-contract">
         <HTMLSelect
           id="target-contract"
@@ -128,6 +162,7 @@ export function ConfigurationForm(): JSX.Element {
           placeholder="1"
           type="number"
           min={1}
+          max={100}
           required
           value={minApprovals.toString()}
           intent={minApprovalsIntent}

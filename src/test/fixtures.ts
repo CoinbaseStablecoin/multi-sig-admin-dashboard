@@ -107,6 +107,9 @@ export const DUMMY_CONTRACT: ContractData = {
   ]),
 };
 
+export const DUMMY_CONTRACT_SELECTOR_1 = "0xd0679d34";
+export const DUMMY_CONTRACT_SELECTOR_2 = "0xe3d670d7";
+
 export const DUMMY_CONTRACT_2: ContractData = {
   name: "DuckCoin",
   address: "0xDDdDddDdDdddDDddDDddDDDDdDdDDdDDdDDDDDDd",

@@ -11,21 +11,18 @@ export interface Contract {
 }
 
 export interface ContractData {
-  /** Contract Address */
   address: string;
-  /** Contract Name */
   name: string;
-  /** ABI JSON */
   abi: string;
 }
 
 export class ContractStore extends Store<ContractData[]> {
-  public static storageKey = "ContractStore";
+  public static readonly storageKey = "ContractStore";
 
   @observable
   private contracts = new Map<string, Contract>();
 
-  protected prepareData(): ContractData[] {
+  protected marshal(): ContractData[] {
     return this.allContracts().map((contract) => ({
       ...contract,
       abi: JSON.stringify(contract.abi),
@@ -33,7 +30,7 @@ export class ContractStore extends Store<ContractData[]> {
   }
 
   @action
-  protected restoreData(data: ContractData[]): void {
+  protected unmarshal(data: ContractData[]): void {
     for (const contract of data) {
       this.addContract(contract);
     }
@@ -41,7 +38,7 @@ export class ContractStore extends Store<ContractData[]> {
 
   /**
    * Add a contract to the store
-   * @param data ContractData
+   * @param data Contract data
    * @returns Added contract
    */
   @action
@@ -57,7 +54,7 @@ export class ContractStore extends Store<ContractData[]> {
 
   /**
    * Return all contracts in the store
-   * @returns An array of contracts
+   * @returns An array of Contract objects
    */
   public allContracts(): Contract[] {
     return Array.from(this.contracts.values());

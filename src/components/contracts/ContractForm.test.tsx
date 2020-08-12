@@ -4,10 +4,7 @@ import React from "react";
 import { StoresContext } from "../../contexts/StoresContext";
 import { routes } from "../../routes";
 import { initializeStores, Stores } from "../../stores";
-import {
-  ContractData as ContractFormProps,
-  ContractStore,
-} from "../../stores/ContractStore";
+import { ContractData, ContractStore } from "../../stores/ContractStore";
 import { DUMMY_CONTRACT } from "../../test/fixtures";
 import { toaster } from "../../toaster";
 import { ContractForm } from "./ContractForm";
@@ -22,7 +19,7 @@ beforeEach(() => {
 });
 
 function renderComponent(
-  props: ContractFormProps = { address: "", name: "", abi: "" }
+  props: ContractData = { address: "", name: "", abi: "" }
 ) {
   return render(
     <StoresContext.Provider value={stores}>
@@ -123,7 +120,7 @@ test("Saving a new contract", () => {
 
   // check that the contract is persisted
   const restoredStore = new ContractStore();
-  restoredStore.restore();
+  restoredStore.load();
   expect(restoredStore.allContracts().length).toEqual(1);
   contract = restoredStore.getContract(DUMMY_CONTRACT.address);
   expect(contract?.address).toEqual(DUMMY_CONTRACT.address);
@@ -171,7 +168,7 @@ test("Updating an existing contract", () => {
 
   // check that the contract is persisted
   const restoredStore = new ContractStore();
-  restoredStore.restore();
+  restoredStore.load();
   expect(restoredStore.allContracts().length).toEqual(1);
   contract = restoredStore.getContract(DUMMY_CONTRACT.address);
   expect(contract?.address).toEqual(DUMMY_CONTRACT.address);
