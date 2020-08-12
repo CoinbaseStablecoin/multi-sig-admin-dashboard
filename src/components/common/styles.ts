@@ -1,7 +1,14 @@
 import React from "react";
 
-export const commonStyles: { [name: string]: React.CSSProperties } = {
-  rightGap: {
-    marginRight: 10,
-  },
+export function ReactCSS(css: React.CSSProperties): React.CSSProperties {
+  return css;
+}
+
+export const commonStyles = {
+  leftGap: ReactCSS({
+    marginLeft: 7,
+  }),
+  rightGap: ReactCSS({
+    marginRight: 7,
+  }),
 };

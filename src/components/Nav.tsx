@@ -4,10 +4,11 @@ import { Box, Flex } from "reflexbox";
 import { CONTRACT_ADDRESS, NETWORK } from "../config";
 import { routes } from "../routes";
 import { etherscanAddress, shortenAddress } from "../util/address";
+import { ReactCSS } from "./common/styles";
 
-const style: React.CSSProperties = {
+const style = ReactCSS({
   height: "auto",
-};
+});
 
 export function Nav(): JSX.Element {
   return (

@@ -15,22 +15,20 @@ import { routes } from "../../routes";
 import { Contract } from "../../stores/ContractStore";
 import { getTransactableFunctions } from "../../util/abi";
 import { etherscanAddress } from "../../util/address";
+import { commonStyles, ReactCSS } from "../common/styles";
 
-const styles: { [name: string]: React.CSSProperties } = {
-  table: {
+const styles = {
+  table: ReactCSS({
     marginTop: 10,
     width: "100%",
-  },
-  thead: {
+  }),
+  thead: ReactCSS({
     whiteSpace: "nowrap",
-  },
-  actions: {
+  }),
+  actions: ReactCSS({
     width: "1%",
     whiteSpace: "nowrap",
-  },
-  editButton: {
-    marginRight: 10,
-  },
+  }),
 };
 
 export function Contracts(): JSX.Element {
@@ -58,7 +56,7 @@ export function Contracts(): JSX.Element {
   const contracts = contractStore.allContracts();
 
   return (
-    <div>
+    <Box>
       <Flex flexDirection="row" flexWrap="wrap" justifyContent="space-between">
         <Box>
           <H2>Contracts</H2>
@@ -74,10 +72,10 @@ export function Contracts(): JSX.Element {
       <HTMLTable striped style={styles.table}>
         <thead style={styles.thead}>
           <tr>
-            <td>Name</td>
-            <td>Address</td>
-            <td># Functions</td>
-            <td></td>
+            <th>Name</th>
+            <th>Address</th>
+            <th># Functions</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -115,7 +113,7 @@ export function Contracts(): JSX.Element {
           again.
         </p>
       </Alert>
-    </div>
+    </Box>
   );
 }
 
@@ -150,7 +148,7 @@ function ContractRow({
         <AnchorButton
           icon="edit"
           text="Edit"
-          style={styles.editButton}
+          style={commonStyles.rightGap}
           href={routes.editContract(address)}
           data-testid="contract-row-edit"
         />
