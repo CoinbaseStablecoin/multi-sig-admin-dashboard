@@ -35,7 +35,7 @@ export function ContractForm(props: ContractFormProps): JSX.Element {
   const handleSubmit = useCallback(
     (evt: React.FormEvent) => {
       evt.preventDefault();
-      const contract = contractStore.addContract({ address, name, abi });
+      const contract = contractStore.add({ address, name, abi });
       contractStore.save();
       toaster.show({
         message: `Contract "${contract.name}" saved`,

@@ -20,8 +20,8 @@ beforeEach(() => {
   localStorage.clear();
   document.location.assign(routes.contracts);
   stores = initializeStores();
-  stores.contractStore.addContract(DUMMY_CONTRACT);
-  stores.contractStore.addContract(DUMMY_CONTRACT_2);
+  stores.contractStore.add(DUMMY_CONTRACT);
+  stores.contractStore.add(DUMMY_CONTRACT_2);
 });
 
 function renderComponent() {
@@ -61,10 +61,8 @@ test("Edit button", () => {
 test("Removing a contract", () => {
   const comp = renderComponent();
 
-  expect(stores.contractStore.allContracts()).toHaveLength(2);
-  expect(stores.contractStore.getContract(DUMMY_CONTRACT.address)).not.toBe(
-    null
-  );
+  expect(stores.contractStore.all()).toHaveLength(2);
+  expect(stores.contractStore.get(DUMMY_CONTRACT.address)).not.toBe(null);
 
   const rows = comp.queryAllByTestId("contract-row");
   expect(rows).toHaveLength(2);
@@ -76,6 +74,6 @@ test("Removing a contract", () => {
 
   fireEvent.click(getByText(alertDialog as HTMLElement, "Remove"));
 
-  expect(stores.contractStore.allContracts()).toHaveLength(1);
-  expect(stores.contractStore.getContract(DUMMY_CONTRACT.address)).toBe(null);
+  expect(stores.contractStore.all()).toHaveLength(1);
+  expect(stores.contractStore.get(DUMMY_CONTRACT.address)).toBe(null);
 });

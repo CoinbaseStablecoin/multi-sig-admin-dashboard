@@ -18,7 +18,7 @@ const styles = {
 
 export function Transactions(): JSX.Element {
   const { transactionStore } = useStores();
-  const transactions = transactionStore.allTransactions();
+  const transactions = transactionStore.all();
 
   return (
     <Box>

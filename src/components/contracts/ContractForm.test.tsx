@@ -112,8 +112,8 @@ test("Saving a new contract", () => {
   ).not.toBe(null);
 
   // check that the contract is added to the store
-  expect(stores.contractStore.allContracts().length).toEqual(1);
-  let contract = stores.contractStore.getContract(DUMMY_CONTRACT.address);
+  expect(stores.contractStore.all().length).toEqual(1);
+  let contract = stores.contractStore.get(DUMMY_CONTRACT.address);
   expect(contract?.address).toEqual(DUMMY_CONTRACT.address);
   expect(contract?.name).toEqual(DUMMY_CONTRACT.name);
   expect(contract?.abi).toEqual(JSON.parse(DUMMY_CONTRACT.abi));
@@ -121,8 +121,8 @@ test("Saving a new contract", () => {
   // check that the contract is persisted
   const restoredStore = new ContractStore();
   restoredStore.load();
-  expect(restoredStore.allContracts().length).toEqual(1);
-  contract = restoredStore.getContract(DUMMY_CONTRACT.address);
+  expect(restoredStore.all().length).toEqual(1);
+  contract = restoredStore.get(DUMMY_CONTRACT.address);
   expect(contract?.address).toEqual(DUMMY_CONTRACT.address);
   expect(contract?.name).toEqual(DUMMY_CONTRACT.name);
   expect(contract?.abi).toEqual(JSON.parse(DUMMY_CONTRACT.abi));
@@ -132,7 +132,7 @@ test("Saving a new contract", () => {
 });
 
 test("Updating an existing contract", () => {
-  stores.contractStore.addContract(DUMMY_CONTRACT);
+  stores.contractStore.add(DUMMY_CONTRACT);
 
   const comp = renderComponent(DUMMY_CONTRACT);
   const addressField = comp.getByTestId("contract-address") as HTMLInputElement;
@@ -158,8 +158,8 @@ test("Updating an existing contract", () => {
   );
 
   // check that the contract is updated
-  expect(stores.contractStore.allContracts().length).toEqual(1);
-  let contract = stores.contractStore.getContract(DUMMY_CONTRACT.address);
+  expect(stores.contractStore.all().length).toEqual(1);
+  let contract = stores.contractStore.get(DUMMY_CONTRACT.address);
   expect(contract?.address).toEqual(DUMMY_CONTRACT.address);
   expect(contract?.name).toEqual("PeteCoin V2");
   expect(contract?.abi).toEqual([
@@ -169,8 +169,8 @@ test("Updating an existing contract", () => {
   // check that the contract is persisted
   const restoredStore = new ContractStore();
   restoredStore.load();
-  expect(restoredStore.allContracts().length).toEqual(1);
-  contract = restoredStore.getContract(DUMMY_CONTRACT.address);
+  expect(restoredStore.all().length).toEqual(1);
+  contract = restoredStore.get(DUMMY_CONTRACT.address);
   expect(contract?.address).toEqual(DUMMY_CONTRACT.address);
   expect(contract?.name).toEqual("PeteCoin V2");
   expect(contract?.abi).toEqual([

@@ -29,7 +29,7 @@ function renderComponent() {
 }
 
 test("Render contract form when it exists", () => {
-  stores.contractStore.addContract(DUMMY_CONTRACT);
+  stores.contractStore.add(DUMMY_CONTRACT);
 
   document.location.assign(routes.editContract(DUMMY_CONTRACT.address));
 

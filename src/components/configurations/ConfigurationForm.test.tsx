@@ -24,8 +24,8 @@ beforeEach(() => {
   localStorage.clear();
   document.location.assign(routes.addContract);
   stores = initializeStores();
-  stores.contractStore.addContract(DUMMY_CONTRACT);
-  stores.contractStore.addContract(DUMMY_CONTRACT_2);
+  stores.contractStore.add(DUMMY_CONTRACT);
+  stores.contractStore.add(DUMMY_CONTRACT_2);
 });
 
 function renderComponent() {
@@ -221,9 +221,7 @@ test("Create a configure transaction", () => {
 
   // check that the transaction is added to the store
   expect(stores.transactionStore.count()).toEqual(1);
-  let transaction:
-    | Transaction
-    | undefined = stores.transactionStore.allTransactions()[0];
+  let transaction: Transaction | undefined = stores.transactionStore.all()[0];
   expect(transaction).toBeInstanceOf(ConfigureTx);
   let configTx = transaction as ConfigureTx;
   expect(configTx.id).toHaveLength(8);
@@ -238,7 +236,7 @@ test("Create a configure transaction", () => {
   const restoredStore = new TransactionStore();
   restoredStore.load();
   expect(stores.transactionStore.count()).toEqual(1);
-  transaction = restoredStore.allTransactions()[0];
+  transaction = restoredStore.all()[0];
   expect(transaction).toBeInstanceOf(ConfigureTx);
   configTx = transaction as ConfigureTx;
   expect(configTx.id).toHaveLength(8);

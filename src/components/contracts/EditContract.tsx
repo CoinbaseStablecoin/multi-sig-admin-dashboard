@@ -14,7 +14,7 @@ export function EditContract(): JSX.Element {
   }
 
   const { contractStore } = useStores();
-  const contract = contractStore.getContract(address);
+  const contract = contractStore.get(address);
 
   return contract ? (
     <>

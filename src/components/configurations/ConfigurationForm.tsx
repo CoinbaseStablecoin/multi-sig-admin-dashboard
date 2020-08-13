@@ -62,7 +62,7 @@ export function ConfigurationForm(): JSX.Element {
         maxOpenProposals,
         approverAddresses || []
       );
-      transactionStore.addTransaction(tx);
+      transactionStore.add(tx);
       transactionStore.save();
       toaster.show({
         message: "Configure transaction created",
@@ -80,10 +80,10 @@ export function ConfigurationForm(): JSX.Element {
     ]
   );
 
-  const contracts = contractStore.allContracts();
+  const contracts = contractStore.all();
 
   const functions = useMemo(() => {
-    const contract = contractStore.getContract(targetContract);
+    const contract = contractStore.get(targetContract);
     if (!contract) {
       return [];
     }
