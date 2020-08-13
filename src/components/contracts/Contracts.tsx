@@ -11,9 +11,8 @@ import React, { useCallback, useState } from "react";
 import { Box, Flex } from "reflexbox";
 import { NETWORK } from "../../config";
 import { useStores } from "../../hooks/useStores";
+import { Contract } from "../../models/Contract";
 import { routes } from "../../routes";
-import { Contract } from "../../stores/ContractStore";
-import { getTransactableFunctions } from "../../util/abi";
 import { etherscanAddress } from "../../util/address";
 import { commonStyles, ReactCSS } from "../common/styles";
 
@@ -124,32 +123,30 @@ function ContractRow({
   contract: Contract;
   onRemoveClick: (contract: Contract) => void;
 }): JSX.Element {
-  const { address, name, abi } = contract;
-
   const handleRemoveClick = useCallback(() => {
     onRemoveClick(contract);
   }, [onRemoveClick, contract]);
 
   return (
     <tr data-testid="contract-row">
-      <td>{name}</td>
+      <td>{contract.name}</td>
       <td>
         <a
           className={Classes.MONOSPACE_TEXT}
-          href={etherscanAddress(address, NETWORK.name)}
+          href={etherscanAddress(contract.address, NETWORK.name)}
           target="_blank"
           rel="noopener noreferrer"
         >
-          {address}
+          {contract.address}
         </a>
       </td>
-      <td>{getTransactableFunctions(abi).length}</td>
+      <td>{contract.transactableFunctions.size}</td>
       <td style={styles.actions}>
         <AnchorButton
           icon="edit"
           text="Edit"
           style={commonStyles.rightGap}
-          href={routes.editContract(address)}
+          href={routes.editContract(contract.address)}
           data-testid="contract-row-edit"
         />
         <Button

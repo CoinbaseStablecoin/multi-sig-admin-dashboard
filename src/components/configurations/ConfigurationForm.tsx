@@ -10,10 +10,9 @@ import {
 } from "@blueprintjs/core";
 import React, { useCallback, useMemo, useState } from "react";
 import { useStores } from "../../hooks/useStores";
+import { ConfigureTx } from "../../models/ConfigureTx";
 import { routes } from "../../routes";
 import { toaster } from "../../toaster";
-import { ConfigureTx } from "../../transactions/ConfigureTx";
-import { getTransactableFunctions } from "../../util/abi";
 import { isValidAddress } from "../../util/address";
 import { handleIntegerChange, handleStringChange } from "../common/handlers";
 import { commonStyles } from "../common/styles";
@@ -87,7 +86,7 @@ export function ConfigurationForm(): JSX.Element {
     if (!contract) {
       return [];
     }
-    return getTransactableFunctions(contract.abi);
+    return Array.from(contract.transactableFunctions.values());
   }, [contractStore, targetContract]);
 
   const validApprovers = approverAddresses !== null;

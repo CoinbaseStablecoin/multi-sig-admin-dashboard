@@ -2,6 +2,8 @@ import { Classes } from "@blueprintjs/core";
 import { fireEvent, queryByText, render } from "@testing-library/react";
 import React from "react";
 import { StoresContext } from "../../contexts/StoresContext";
+import { ConfigureTx } from "../../models/ConfigureTx";
+import { Transaction } from "../../models/Transaction";
 import { routes } from "../../routes";
 import { initializeStores, Stores } from "../../stores";
 import { TransactionStore } from "../../stores/TransactionStore";
@@ -13,8 +15,6 @@ import {
   VALID_ADDRESS_2,
 } from "../../test/fixtures";
 import { toaster } from "../../toaster";
-import { ConfigureTx } from "../../transactions/ConfigureTx";
-import { Transaction } from "../../transactions/Transaction";
 import { ConfigurationForm } from "./ConfigurationForm";
 
 let stores: Stores;

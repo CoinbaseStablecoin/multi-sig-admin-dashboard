@@ -1,5 +1,5 @@
 import { AbiItem } from "web3-utils";
-import { ContractData } from "../stores/ContractStore";
+import { MarshaledContract } from "../models/Contract";
 
 export const BASIC_TOKEN_ABI: AbiItem[] = [
   {
@@ -82,7 +82,7 @@ export const BASIC_TOKEN_ABI: AbiItem[] = [
   },
 ];
 
-export const DUMMY_CONTRACT: ContractData = {
+export const DUMMY_CONTRACT: MarshaledContract = {
   name: "PeteCoin",
   address: "0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa",
   abi: JSON.stringify([
@@ -110,7 +110,7 @@ export const DUMMY_CONTRACT: ContractData = {
 export const DUMMY_CONTRACT_SELECTOR_1 = "0xd0679d34";
 export const DUMMY_CONTRACT_SELECTOR_2 = "0xe3d670d7";
 
-export const DUMMY_CONTRACT_2: ContractData = {
+export const DUMMY_CONTRACT_2: MarshaledContract = {
   name: "DuckCoin",
   address: "0xDDdDddDdDdddDDddDDddDDDDdDdDDdDDdDDDDDDd",
   abi: JSON.stringify([

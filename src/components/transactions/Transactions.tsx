@@ -2,7 +2,7 @@ import { H2, HTMLTable } from "@blueprintjs/core";
 import React from "react";
 import { Box, Flex } from "reflexbox";
 import { useStores } from "../../hooks/useStores";
-import { Transaction } from "../../transactions/Transaction";
+import { Transaction } from "../../models/Transaction";
 import { toDate } from "../../util/timestamp";
 import { ReactCSS } from "../common/styles";
 

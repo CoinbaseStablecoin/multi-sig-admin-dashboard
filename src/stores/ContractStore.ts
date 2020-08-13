@@ -1,51 +1,35 @@
 import { action } from "mobx";
-import { AbiItem } from "web3-utils";
-import { parseAbiJson } from "../util/abi";
-import { toChecksumAddress } from "../util/address";
+import { Contract, MarshaledContract } from "../models/Contract";
 import { Store } from "./Store";
 
-export interface Contract {
-  address: string;
-  name: string;
-  abi: AbiItem[];
-}
-
-export interface ContractData {
-  address: string;
-  name: string;
-  abi: string;
-}
-
-export class ContractStore extends Store<Contract, ContractData[]> {
+export class ContractStore extends Store<Contract, MarshaledContract[]> {
   public static readonly storageKey = "ContractStore";
 
-  protected marshal(): ContractData[] {
+  protected marshal(): MarshaledContract[] {
     return this.all().map((contract) => ({
-      ...contract,
-      abi: JSON.stringify(contract.abi),
+      address: contract.address,
+      name: contract.name,
+      abi: contract.abi,
     }));
   }
 
   @action
-  protected unmarshal(data: ContractData[]): void {
-    for (const contract of data) {
-      this.add(contract);
+  protected unmarshal(data: MarshaledContract[]): void {
+    for (const marshaled of data) {
+      this.add(marshaled);
     }
   }
 
   /**
    * Add a contract to the store
-   * @param data Contract data
+   * @param marshaled Marshaled contract data
    * @returns Added contract
    */
   @action
-  public add(data: ContractData): Contract {
-    const contract: Contract = {
-      name: data.name.trim(),
-      address: toChecksumAddress(data.address),
-      abi: parseAbiJson(data.abi),
-    };
-    this.data.set(data.address.toLowerCase(), contract);
+  public add(marshaled: MarshaledContract): Contract {
+    const { address, name, abi } = marshaled;
+    const contract = new Contract(address, name, abi);
+    this.data.set(address.toLowerCase(), contract);
     return contract;
   }
 }

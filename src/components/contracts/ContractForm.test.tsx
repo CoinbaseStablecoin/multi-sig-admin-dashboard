@@ -2,12 +2,13 @@ import { Classes } from "@blueprintjs/core";
 import { fireEvent, queryByText, render } from "@testing-library/react";
 import React from "react";
 import { StoresContext } from "../../contexts/StoresContext";
+import { Contract } from "../../models/Contract";
 import { routes } from "../../routes";
 import { initializeStores, Stores } from "../../stores";
-import { ContractData, ContractStore } from "../../stores/ContractStore";
+import { ContractStore } from "../../stores/ContractStore";
 import { DUMMY_CONTRACT } from "../../test/fixtures";
 import { toaster } from "../../toaster";
-import { ContractForm } from "./ContractForm";
+import { ContractForm, ContractFormProps } from "./ContractForm";
 
 let stores: Stores;
 
@@ -19,7 +20,7 @@ beforeEach(() => {
 });
 
 function renderComponent(
-  props: ContractData = { address: "", name: "", abi: "" }
+  props: ContractFormProps = { address: "", name: "", abi: "" }
 ) {
   return render(
     <StoresContext.Provider value={stores}>
@@ -114,18 +115,20 @@ test("Saving a new contract", () => {
   // check that the contract is added to the store
   expect(stores.contractStore.all().length).toEqual(1);
   let contract = stores.contractStore.get(DUMMY_CONTRACT.address);
+  expect(contract).toBeInstanceOf(Contract);
   expect(contract?.address).toEqual(DUMMY_CONTRACT.address);
   expect(contract?.name).toEqual(DUMMY_CONTRACT.name);
-  expect(contract?.abi).toEqual(JSON.parse(DUMMY_CONTRACT.abi));
+  expect(contract?.abi).toEqual(DUMMY_CONTRACT.abi);
 
   // check that the contract is persisted
   const restoredStore = new ContractStore();
   restoredStore.load();
   expect(restoredStore.all().length).toEqual(1);
   contract = restoredStore.get(DUMMY_CONTRACT.address);
+  expect(contract).toBeInstanceOf(Contract);
   expect(contract?.address).toEqual(DUMMY_CONTRACT.address);
   expect(contract?.name).toEqual(DUMMY_CONTRACT.name);
-  expect(contract?.abi).toEqual(JSON.parse(DUMMY_CONTRACT.abi));
+  expect(contract?.abi).toEqual(DUMMY_CONTRACT.abi);
 
   // check that it navigates to the contract list page
   expect(document.location.hash).toEqual(routes.contracts.slice(1));
@@ -160,22 +163,24 @@ test("Updating an existing contract", () => {
   // check that the contract is updated
   expect(stores.contractStore.all().length).toEqual(1);
   let contract = stores.contractStore.get(DUMMY_CONTRACT.address);
+  expect(contract).toBeInstanceOf(Contract);
   expect(contract?.address).toEqual(DUMMY_CONTRACT.address);
   expect(contract?.name).toEqual("PeteCoin V2");
-  expect(contract?.abi).toEqual([
-    { type: "function", name: "bar", inputs: [] },
-  ]);
+  expect(contract?.abi).toEqual(
+    `[{"type":"function","name":"bar","inputs":[]}]`
+  );
 
   // check that the contract is persisted
   const restoredStore = new ContractStore();
   restoredStore.load();
   expect(restoredStore.all().length).toEqual(1);
   contract = restoredStore.get(DUMMY_CONTRACT.address);
+  expect(contract).toBeInstanceOf(Contract);
   expect(contract?.address).toEqual(DUMMY_CONTRACT.address);
   expect(contract?.name).toEqual("PeteCoin V2");
-  expect(contract?.abi).toEqual([
-    { type: "function", name: "bar", inputs: [] },
-  ]);
+  expect(contract?.abi).toEqual(
+    `[{"type":"function","name":"bar","inputs":[]}]`
+  );
 
   // check that it navigates to the contract list page
   expect(document.location.hash).toEqual(routes.contracts.slice(1));

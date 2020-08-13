@@ -1,9 +1,6 @@
 import { action } from "mobx";
-import {
-  ConfigureTx,
-  isMarshaledConfigureTx,
-} from "../transactions/ConfigureTx";
-import { MarshaledTx, Transaction } from "../transactions/Transaction";
+import { ConfigureTx, isMarshaledConfigureTx } from "../models/ConfigureTx";
+import { MarshaledTx, Transaction } from "../models/Transaction";
 import { Store } from "./Store";
 
 export class TransactionStore extends Store<Transaction, MarshaledTx[]> {

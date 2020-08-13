@@ -22,7 +22,7 @@ export function EditContract(): JSX.Element {
       <ContractForm
         address={contract.address}
         name={contract.name}
-        abi={JSON.stringify(contract.abi)}
+        abi={contract.abi}
       />
     </>
   ) : (
