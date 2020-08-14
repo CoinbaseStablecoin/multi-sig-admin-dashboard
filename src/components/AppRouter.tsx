@@ -9,6 +9,7 @@ import { EditContract } from "./contracts/EditContract";
 import { Home } from "./home/Home";
 import { Proposals } from "./proposals/Proposals";
 import { Transactions } from "./transactions/Transactions";
+import { ViewTransaction } from "./transactions/ViewTransaction";
 
 export function AppRouter(): JSX.Element {
   return (
@@ -41,6 +42,11 @@ export function AppRouter(): JSX.Element {
           exact
           path={stripHash(routes.transactions)}
           component={Transactions}
+        />
+        <Route
+          exact
+          path={stripHash(routes.viewTransaction(":id"))}
+          component={ViewTransaction}
         />
       </Switch>
     </Router>

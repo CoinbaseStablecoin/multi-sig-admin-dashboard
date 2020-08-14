@@ -1,6 +1,7 @@
+import { abiCoder } from "../util/abi";
 import { makeTimestamp } from "../util/timestamp";
 import { uid } from "../util/uid";
-import { MarshaledTx, Transaction } from "./Transaction";
+import { MarshaledTx, Transaction, TxParams } from "./Transaction";
 
 interface MarshaledConfigureTx extends MarshaledTx {
   type: typeof ConfigureTx.type;
@@ -54,6 +55,28 @@ export class ConfigureTx extends Transaction {
       maxOpenProposals: this.maxOpenProposals,
       approvers: this.approvers,
       timestamp: this.timestamp,
+    };
+  }
+
+  public params(): TxParams {
+    return {
+      ...super.params(),
+      data: abiCoder.encodeParameters(
+        [
+          "address", // targetContract
+          "bytes4", // selector
+          "uint256", // minApprovals
+          "uint256", // maxOpenProposals
+          "address[]", // approvers
+        ],
+        [
+          this.targetContract,
+          this.selector,
+          this.minApprovals,
+          this.maxOpenProposals,
+          this.approvers,
+        ]
+      ),
     };
   }
 }

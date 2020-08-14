@@ -11,4 +11,10 @@ export const commonStyles = {
   rightGap: ReactCSS({
     marginRight: 7,
   }),
+  topGap: ReactCSS({
+    marginTop: 5,
+  }),
+  bottomGap: ReactCSS({
+    marginBottom: 5,
+  }),
 };

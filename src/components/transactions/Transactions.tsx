@@ -1,10 +1,11 @@
-import { H2, HTMLTable } from "@blueprintjs/core";
+import { AnchorButton, Button, H2, HTMLTable, Intent } from "@blueprintjs/core";
 import React from "react";
 import { Box, Flex } from "reflexbox";
 import { useStores } from "../../hooks/useStores";
 import { Transaction } from "../../models/Transaction";
+import { routes } from "../../routes";
 import { toDate } from "../../util/timestamp";
-import { ReactCSS } from "../common/styles";
+import { commonStyles, ReactCSS } from "../common/styles";
 
 const styles = {
   table: ReactCSS({
@@ -12,6 +13,10 @@ const styles = {
     width: "100%",
   }),
   thead: ReactCSS({
+    whiteSpace: "nowrap",
+  }),
+  actions: ReactCSS({
+    width: "1%",
     whiteSpace: "nowrap",
   }),
 };
@@ -50,7 +55,15 @@ function TransactionRow({ tx }: { tx: Transaction }): JSX.Element {
     <tr>
       <td>{(tx.constructor as typeof Transaction).type}</td>
       <td>{toDate(tx.timestamp).toLocaleString()}</td>
-      <td></td>
+      <td style={styles.actions}>
+        <AnchorButton
+          icon="eye-open"
+          text="Show"
+          style={commonStyles.rightGap}
+          href={routes.viewTransaction(tx.id)}
+        />
+        <Button icon="trash" text="Remove" intent={Intent.DANGER} />
+      </td>
     </tr>
   );
 }

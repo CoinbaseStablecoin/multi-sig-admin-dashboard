@@ -1,3 +1,4 @@
+import Web3 from "web3";
 import { AbiInput, AbiItem } from "web3-utils";
 import { AbiFunction } from "./AbiFunction";
 
@@ -122,3 +123,5 @@ function isValidAbiInput(input: any): input is AbiInput {
 
   return true;
 }
+
+export const abiCoder = new Web3().eth.abi;
